@@ -1,7 +1,7 @@
 # Créditos e licenças
 
 - **Three.js 0.186.1** — colaboradores Three.js, MIT; licença em `public/assets/licenses/Three-MIT.txt`. Geometrias e renderização interativa do jogo.
-- **GSAP 3.15.0** — licença padrão GSAP, cópia em `public/assets/licenses/GSAP-LICENSE.txt`; também disponível em https://gsap.com/standard-license. Animações do jogo. Não se afirma que a referência Lusion utilize GSAP.
+- **GSAP 3.15.0** — licença padrão GSAP, disponível em https://gsap.com/standard-license. Animações do jogo. Não se afirma que a referência Lusion utilize GSAP.
 
 - **React e React DOM** — Meta Platforms, Inc. e colaboradores; licença MIT. Cópias em `public/assets/licenses/React-MIT.txt` e `React-DOM-MIT.txt`.
 - **Phosphor Icons** — Phosphor Icons; licença MIT. Cópia em `public/assets/licenses/Phosphor-MIT.txt`. Os ícones são componentes da biblioteca, sem redesenho manual.

@@ -1,8 +1,8 @@
 # Revisão visual e de interação — TCP vs. UDP
 
-final result: blocked
+final result: passed
 
-Atualização em andamento: o professor solicitou um jogo 3D de dez fases após a atividade. A revisão dos slides abaixo continua válida; a nova experiência deve passar por testes e capturas antes da entrega final.
+Escopo final: oito slides, simulação, dez questões e jogo 3D de dez fases após a atividade. Os percursos locais do jogo foram concluídos pela interface, além dos testes automatizados das regras.
 
 ## Alvo e evidências
 
@@ -66,3 +66,29 @@ Depois dos ajustes, a referência e a implementação foram abertas juntas novam
 - [x] Oito slides conferidos em Chromebook e TV.
 - [x] Simulação, atividade, persistência, navegação e tela cheia conferidas.
 - [x] Resultado visual aprovado no escopo descrito.
+
+## Extensão: jogo 3D de dez fases
+
+A referência Lusion foi inspecionada ao vivo. Seu canvas declarava Three.js r158; os caminhos `/_astro/` são indicativos de Astro. Não foi identificada sua biblioteca de animação. Esta implementação utiliza Three.js e GSAP, sem incorporar código, imagens ou modelos do site de referência.
+
+O jogo conserva espaço livre, composição limpa, formas tridimensionais e movimento suave, com roxo e laranja da aula. Os controles e objetivos ficam nas bordas para preservar a área de interação. Geometrias, materiais e shaders são preparados no carregamento antes de liberar a primeira fase. A importação do motor é separada do carregamento inicial dos slides.
+
+Evidências locais adicionais: `lusion-reference.jpg`, `game-comparison.png`, `game-loading.jpg`, `game-level-6.jpg`, `game-level-8.jpg`, `game-level-10.jpg` e `game-finish.jpg`. As capturas mostram o progresso real do carregamento, perda UDP, controle do jogador, duas rotas e conclusão das dez fases em 1366 × 768.
+
+Verificado pela interface:
+
+- Dez fases concluídas, com envio, ordenação, retransmissão, confirmação e entrega de arquivo TCP.
+- Arraste real de uma peça ao destino e alternativa de selecionar a peça e clicar no destino.
+- UDP continua após perder a parte 3; leituras antigas são rejeitadas nas fases de voz e sensor.
+- Movimento pelo teclado e pelos botões. Uma atualização perdida mantém a posição remota antiga até a próxima atualização.
+- Entrega de arquivo bloqueada enquanto falta uma parte; rotas TCP/UDP respeitadas na última fase.
+- Pausa, retomada, retorno ao resultado, recuperação da próxima fase e reinício após concluir as dez fases.
+- Corrigidos: rótulos disponíveis antes da projeção inicial, atualização visual da posição remota após perda e constante de sombras obsoleta.
+
+Testes automatizados: 28 verificações das regras de aula e jogo, além de quatro verificações do empacotamento. A mudança real de visibilidade da janela conserva a limitação de verificação descrita acima. Nenhum P0/P1/P2 pendente identificado no percurso testado.
+
+## Publicação
+
+Publicado em https://fernandobalbino.github.io/Aula-TCP-UDP/ por GitHub Actions. Execução 39832678430 concluída com sucesso em 22/10/2026, incluindo testes, build estático, empacotamento e deploy HTTPS. Código publicado: commit `29385c7`.
+
+Pelo endereço público, foram percorridos os oito slides e concluídas as dez questões com 100 pontos. O resultado liberou o jogo; o indicador de carregamento foi exibido, a cena 3D iniciou e os três pacotes da primeira fase foram enviados pela interface. Evidências locais: `public-cover.jpg`, `public-game-loading.jpg` e `public-game.jpg`. Os dados do aluno de teste ficaram apenas no navegador de verificação.
