@@ -1,0 +1,671 @@
+.game-shell {
+  height: 100svh;
+  min-height: 650px;
+  display: grid;
+  grid-template-rows: 66px 128px minmax(350px, 1fr) 80px;
+  background: #f3f2fa;
+  overflow: hidden;
+}
+.game-header {
+  padding: 0 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0dced;
+  background: #f3f2fa;
+  gap: 20px;
+}
+.game-header > .text-button {
+  font-size: 12px;
+}
+.game-header > span {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #78718e;
+}
+.game-header b {
+  color: var(--purple);
+  margin-left: 10px;
+}
+.game-header > div {
+  display: flex;
+  gap: 6px;
+}
+.game-header .icon-button {
+  width: 36px;
+  height: 36px;
+}
+.game-header .icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+.game-titlebar {
+  display: flex;
+  justify-content: space-between;
+  gap: 45px;
+  align-items: center;
+  padding: 15px 5vw;
+  position: relative;
+  z-index: 2;
+}
+.game-titlebar .eyebrow {
+  font-size: 10px;
+  margin-bottom: 10px;
+  letter-spacing: 0.13em;
+}
+.game-titlebar .eyebrow > span {
+  color: #8a829b;
+  margin-left: 5px;
+}
+.game-titlebar .eyebrow > b {
+  font-weight: 600;
+  background: white;
+  padding: 5px 11px;
+  border-radius: 20px;
+  margin-left: 17px;
+  letter-spacing: 0;
+  font-size: 11px;
+  color: var(--purple);
+}
+.game-titlebar h1 {
+  font-size: clamp(36px, 3.4vw, 62px);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.game-titlebar > p {
+  font-size: clamp(14px, 1.12vw, 21px);
+  max-width: 500px;
+  color: #645b78;
+  line-height: 1.6;
+}
+.game-world {
+  position: relative;
+  min-height: 0;
+  isolation: isolate;
+}
+.game-world canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  position: absolute;
+  inset: 0;
+}
+.game-object-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.game-object {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  min-width: 35px;
+  min-height: 31px;
+  border-radius: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  font:
+    600 12px/1.2 Inter,
+    sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 3px 15px #21133c0b;
+  border: 1px solid #ffffffd9;
+  background: #fffffff0;
+  color: var(--purple);
+  will-change: transform;
+  cursor: grab;
+}
+.game-object:active {
+  cursor: grabbing;
+}
+.packet-label::after { content: ""; position: absolute; inset: -5px -24px -70px; }
+.target-label::after { content: ""; position: absolute; inset: -26px -20px; }
+.game-object:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.game-object.chosen {
+  background: var(--purple);
+  color: white;
+  border-color: var(--purple);
+  outline: 3px solid #e2d6ff;
+}
+.game-object.fresh {
+  color: #a13619;
+}
+.game-object.filled {
+  background: #e9f8f0;
+  color: #216f58;
+  font-size: 11px;
+}
+.game-object.filled svg {
+  width: 15px;
+  height: 15px;
+}
+.game-object.target-label {
+  border: 1px solid #c9bcf0;
+  background: #f9f6ffd9;
+  font-size: 12px;
+  color: #71648e;
+  min-width: 38px;
+}
+.game-object.target-label:not(:disabled):hover {
+  background: var(--purple);
+  color: white;
+  border-color: var(--purple);
+}
+.player-label {
+  pointer-events: none;
+  background: var(--purple);
+  color: white;
+  font-size: 11px;
+}
+.game-footer {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: space-between;
+  padding: 12px 4vw;
+  background: #f3f2fa;
+  border-top: 1px solid #e0dced;
+}
+.game-footer > p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #766d8a;
+  max-width: 660px;
+  margin-right: auto;
+}
+.game-phase-dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.game-phase-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ddd5ec;
+}
+.game-phase-dots .done {
+  background: #3012b5;
+}
+.game-phase-dots .current {
+  background: #ff603d;
+  width: 22px;
+  border-radius: 5px;
+}
+.game-goal {
+  font:
+    700 32px/1 "Barlow Condensed",
+    sans-serif;
+  color: var(--purple);
+  white-space: nowrap;
+}
+.game-goal > span {
+  font:
+    500 12px/1 Inter,
+    sans-serif;
+  color: #9488a6;
+}
+.deliver-file {
+  font-size: 12px;
+  min-height: 42px;
+  padding: 10px 15px;
+  white-space: nowrap;
+}
+.deliver-file svg {
+  width: 17px;
+  height: 17px;
+}
+.move-controls {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  z-index: 5;
+}
+.move-controls button {
+  width: 40px;
+  height: 38px;
+  background: #fff;
+  color: var(--purple);
+  border: 1px solid #ded5f5;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+}
+.move-controls button:hover {
+  background: var(--purple);
+  color: white;
+}
+.move-controls svg {
+  width: 21px;
+  height: 21px;
+}
+.game-load,
+.game-pause {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  background: #f3f2fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+  text-align: center;
+}
+.game-load > svg,
+.game-pause > svg {
+  color: var(--purple);
+  margin-bottom: 20px;
+}
+.game-load h2,
+.game-pause h2 {
+  font-size: clamp(36px, 4vw, 62px);
+  color: var(--purple);
+  margin-bottom: 20px;
+}
+.game-load > .eyebrow {
+  font-size: 9px;
+  margin-bottom: 15px;
+}
+.game-load p,
+.game-pause p {
+  font-size: 14px;
+  color: #766d8a;
+  max-width: 490px;
+}
+.game-load p b {
+  color: var(--purple);
+  margin-left: 10px;
+}
+.game-load .text-button {
+  margin-top: 22px;
+  font-size: 12px;
+}
+.game-load > div:not(.game-load-track) {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 25px;
+}
+.game-load > div > .text-button {
+  margin-top: 0;
+}
+.game-load-track {
+  height: 3px;
+  background: #e3dbf2;
+  width: 280px;
+  margin: 12px 0 22px;
+}
+.game-load-track span {
+  display: block;
+  height: 100%;
+  background: var(--purple);
+  transition: width 0.3s;
+}
+.game-pause {
+  background: #f3f2faf5;
+}
+.game-pause .button {
+  margin-top: 25px;
+}
+.level-complete {
+  position: absolute;
+  z-index: 7;
+  right: 5vw;
+  bottom: 25px;
+  width: min(560px, calc(100% - 40px));
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid #e5def1;
+  border-radius: 20px;
+  box-shadow: 0 20px 80px #28135315;
+}
+.level-complete > svg {
+  color: var(--green);
+  flex-shrink: 0;
+}
+.level-complete .eyebrow {
+  font-size: 9px;
+  margin-bottom: 7px;
+}
+.level-complete h2 {
+  font-size: 40px;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+.level-complete p:not(.eyebrow) {
+  font-size: 14px;
+  color: #746b86;
+  line-height: 1.6;
+}
+.level-complete .button {
+  margin-top: 20px;
+  min-height: 45px;
+  padding: 12px 17px;
+  font-size: 13px;
+}
+.level-complete .button svg {
+  height: 19px;
+  width: 19px;
+}
+.game-finish,
+.game-lock {
+  background: #f3f2fa;
+  min-height: 100svh;
+  padding: 55px 8vw;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+.game-finish > .eyebrow {
+  font-size: 10px;
+  margin-bottom: 20px;
+}
+.game-finish > svg,
+.game-lock > svg {
+  color: var(--orange);
+  margin-bottom: 22px;
+}
+.game-finish h1,
+.game-lock h1 {
+  font-size: clamp(48px, 5.7vw, 100px);
+  color: var(--purple);
+  max-width: 900px;
+}
+.game-finish > p:not(.eyebrow),
+.game-lock > p {
+  font-size: clamp(18px, 1.5vw, 28px);
+  color: #746b86;
+  max-width: 800px;
+  margin-top: 25px;
+}
+.game-finish > .game-quiz-score {
+  font-size: 14px !important;
+}
+.finish-facts {
+  display: flex;
+  gap: 50px;
+  margin-top: 30px;
+  max-width: 800px;
+}
+.finish-facts > span {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #746b86;
+}
+.finish-facts strong {
+  display: block;
+  font:
+    700 32px "Barlow Condensed",
+    sans-serif;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+.game-finish > div:last-child {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+.game-lock .button {
+  margin-top: 30px;
+}
+.game-lite .game-object-labels {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: auto;
+  padding: 35px;
+  min-height: 100%;
+}
+.game-lite .game-object {
+  position: static;
+  transform: none !important;
+  visibility: visible !important;
+  min-height: 70px;
+  border-radius: 14px;
+  font-size: 18px;
+  padding: 15px 25px;
+}
+.game-lite .packet-label {
+  background: var(--purple);
+  color: white;
+  border-color: var(--purple);
+}
+.game-lite .target-label {
+  min-width: 110px;
+  border: 2px dashed #a899ce;
+}
+.game-lite .packet-label:disabled {
+  opacity: 0.3;
+}
+.game-lite .game-object svg {
+  width: 25px;
+  height: 25px;
+}
+.game-lite .move-controls {
+  bottom: 5px;
+}
+.game-finish .text-button {
+  font-size: 13px;
+}
+@media (min-width: 1700px) {
+  .game-shell {
+    grid-template-rows: 80px 155px minmax(400px, 1fr) 90px;
+  }
+  .game-titlebar .eyebrow {
+    font-size: 12px;
+  }
+  .game-header > span {
+    font-size: 12px;
+  }
+  .game-titlebar > p {
+    max-width: 650px;
+  }
+  .game-footer > p {
+    font-size: 15px;
+  }
+  .game-object {
+    font-size: 15px;
+    padding: 9px 16px;
+    min-height: 39px;
+  }
+  .game-object.target-label {
+    font-size: 15px;
+  }
+  .level-complete {
+    width: 650px;
+    padding: 40px;
+  }
+  .level-complete h2 {
+    font-size: 52px;
+  }
+  .level-complete p:not(.eyebrow) {
+    font-size: 18px;
+  }
+  .level-complete .button {
+    font-size: 16px;
+  }
+  .move-controls button {
+    height: 48px;
+    width: 52px;
+  }
+}
+@media (max-width: 900px) {
+  .game-shell {
+    min-height: 720px;
+    grid-template-rows: 58px 156px minmax(350px, 1fr) 110px;
+  }
+  .game-header {
+    padding: 0 20px;
+  }
+  .game-header > span {
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+  .game-header b {
+    display: block;
+    font-size: 9px;
+    margin: 3px 0 0;
+  }
+  .game-header > .text-button {
+    font-size: 10px;
+  }
+  .game-header .icon-button {
+    width: 30px;
+  }
+  .game-titlebar {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 15px 25px;
+    gap: 13px;
+  }
+  .game-titlebar h1 {
+    font-size: 35px;
+  }
+  .game-titlebar > p {
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 600px;
+  }
+  .game-titlebar .eyebrow {
+    font-size: 9px;
+    margin-bottom: 7px;
+  }
+  .game-object {
+    font-size: 10px;
+    padding: 7px 9px;
+    min-height: 33px;
+  }
+  .game-object.target-label {
+    font-size: 10px;
+  }
+  .game-footer {
+    padding: 13px 23px;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  .game-footer > p {
+    font-size: 10px;
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+  }
+  .game-phase-dots {
+    gap: 4px;
+  }
+  .game-phase-dots span {
+    height: 5px;
+    width: 5px;
+  }
+  .game-phase-dots .current {
+    width: 16px;
+  }
+  .game-goal {
+    margin-left: auto;
+    font-size: 27px;
+  }
+  .game-goal > span {
+    font-size: 10px;
+  }
+  .deliver-file {
+    font-size: 10px;
+    margin-left: auto;
+    min-height: 35px;
+  }
+  .level-complete {
+    bottom: 15px;
+    right: 20px;
+    padding: 23px;
+    gap: 13px;
+  }
+  .level-complete > svg {
+    width: 27px;
+  }
+  .level-complete h2 {
+    font-size: 33px;
+  }
+  .level-complete p:not(.eyebrow) {
+    font-size: 12px;
+  }
+  .level-complete .button {
+    font-size: 12px;
+  }
+  .game-load h2 {
+    font-size: 40px;
+  }
+  .game-load > div:not(.game-load-track) {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .game-load p {
+    font-size: 12px;
+  }
+  .game-load .button {
+    font-size: 12px;
+  }
+  .game-finish,
+  .game-lock {
+    padding: 40px 27px;
+  }
+  .game-finish h1,
+  .game-lock h1 {
+    font-size: 58px;
+  }
+  .game-finish > p:not(.eyebrow) {
+    font-size: 18px;
+  }
+  .finish-facts {
+    gap: 25px;
+  }
+  .finish-facts > span {
+    font-size: 12px;
+  }
+  .finish-facts strong {
+    font-size: 27px;
+  }
+  .game-finish > div:last-child {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .game-lite .game-object-labels {
+    gap: 12px;
+    padding: 20px;
+  }
+  .game-lite .game-object {
+    min-height: 55px;
+    font-size: 13px;
+    padding: 12px 17px;
+  }
+  .game-lite .target-label {
+    min-width: 75px;
+  }
+}
