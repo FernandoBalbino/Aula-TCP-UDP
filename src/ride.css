@@ -1,0 +1,69 @@
+.ride-slide { padding: 3vh 5.5vw 2vh; display: flex; flex-direction: column; justify-content: center; }
+.ride-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.ride-heading .eyebrow { margin-bottom: 9px; }
+.ride-heading h2 { font-size: clamp(40px, 4vw, 72px); margin-bottom: 10px; }
+.ride-demo-tag { color: var(--purple); background: var(--pale); padding: 10px 14px; border-radius: 5px; font-size: 10px; font-weight: 700; letter-spacing: .08em; white-space: nowrap; }
+.ride-intro { color: var(--muted); font-size: clamp(15px, 1.2vw, 22px); margin-bottom: 18px; }
+.ride-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.ride-card { --ride-accent: var(--purple); border: 1px solid #e0dceb; border-radius: 17px; background: white; box-shadow: 0 10px 0 -5px #ece8f5, 0 16px 25px -22px #30124c66; overflow: hidden; min-width: 0; }
+.ride-udp { --ride-accent: #bc381a; }
+.ride-card-top { display: flex; align-items: center; justify-content: space-between; margin: 15px 22px 10px; }
+.ride-app-name { font-size: 24px; font-weight: 600; letter-spacing: -1px; color: #15151a; }
+.ride-app-name b { font-size: 13px; letter-spacing: 0; font-weight: 500; margin-left: 4px; }
+.ride-protocol { color: white; background: var(--ride-accent); border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 700; }
+.ride-card-title { display: flex; align-items: center; justify-content: space-between; padding: 0 22px; gap: 10px; }
+.ride-card-title h3 { font-size: clamp(23px, 2.1vw, 35px); color: var(--ride-accent); }
+.ride-card-title > span { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ride-map { display: block; width: 100%; height: clamp(190px, 24vh, 330px); margin-top: 4px; }
+.ride-card-bottom { margin: 0 22px 12px; }
+.ride-card-bottom > div { display: flex; align-items: center; gap: 9px; }
+.ride-card-bottom > div > svg { color: var(--ride-accent); }
+.ride-card-bottom > div > p { font-size: clamp(11px, 1vw, 17px); font-weight: 600; flex: 1; line-height: 1.4; }
+.ride-card-bottom p svg { display: inline-block; vertical-align: middle; margin: 0 3px; }
+.ride-card-bottom p span { display: block; font-size: 10px; color: var(--muted); font-weight: 400; margin-top: 3px; }
+.ride-card-bottom strong { font-size: 16px; color: var(--ride-accent); font-variant-numeric: tabular-nums; }
+.ride-live-message { margin-top: 9px; font-size: clamp(11px, .9vw, 15px); color: var(--ride-accent); min-height: 20px; display: flex; gap: 6px; align-items: center; }
+.ride-explanation { padding: 12px 22px; background: #f4f1fc; }
+.ride-udp .ride-explanation { background: #fff1eb; }
+.ride-explanation b { font-size: clamp(12px, 1vw, 17px); color: var(--ride-accent); }
+.ride-explanation p { font-size: clamp(12px, 1vw, 17px); margin-top: 4px; }
+.ride-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.ride-controls .button { min-height: 46px; padding: 10px 18px; font-size: 13px; gap: 10px; }
+.ride-step-toggle { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); cursor: pointer; }
+.ride-step-toggle input { accent-color: var(--purple); width: 17px; height: 17px; }
+.ride-real-legend { margin-left: auto; font-size: 11px; color: #24634f; display: flex; align-items: center; gap: 7px; }
+.ride-real-legend i { width: 16px; height: 16px; border: 2px dashed #14715a; border-radius: 50%; }
+.ride-timer { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ride-summary { margin-top: 11px; color: var(--purple); font-size: clamp(13px, 1.1vw, 19px); font-weight: 500; }
+.ride-caveat { font-size: clamp(10px, .78vw, 13px); color: var(--muted); line-height: 1.45; margin-top: 7px; max-width: 1400px; }
+@media (min-width: 901px) and (max-height: 800px) {
+  .ride-slide { padding-top: 14px; padding-bottom: 14px; }
+  .ride-heading h2 { font-size: 43px; margin-bottom: 5px; }
+  .ride-heading .eyebrow { font-size: 10px; margin-bottom: 6px; }
+  .ride-intro { margin-bottom: 11px; font-size: 14px; }
+  .ride-map { height: 175px; }
+  .ride-card-top { margin-top: 10px; margin-bottom: 5px; }
+  .ride-card-bottom { margin-bottom: 9px; }
+  .ride-explanation { padding-top: 8px; padding-bottom: 8px; }
+  .ride-controls { margin-top: 16px; }
+}
+@media (max-width: 900px) {
+  .ride-slide { padding: 25px 6vw; }
+  .ride-heading { align-items: flex-start; }
+  .ride-demo-tag { display: none; }
+  .ride-heading h2 { font-size: 43px; }
+  .ride-comparison { gap: 18px; }
+  .ride-card-top, .ride-card-bottom { margin-left: 12px; margin-right: 12px; }
+  .ride-card-title, .ride-explanation { padding-left: 12px; padding-right: 12px; }
+  .ride-card-title h3 { font-size: 25px; }
+  .ride-map { height: auto; }
+  .ride-app-name { font-size: 21px; }
+}
+@media (max-width: 600px) {
+  .ride-comparison { grid-template-columns: 1fr; }
+  .ride-card-title h3 { font-size: 30px; }
+  .ride-real-legend { margin-left: 0; }
+  .ride-controls { gap: 10px; }
+  .ride-controls .button { padding: 10px 14px; }
+  .ride-caveat { font-size: 11px; }
+}

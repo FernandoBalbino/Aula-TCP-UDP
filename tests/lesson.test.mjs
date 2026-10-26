@@ -20,6 +20,85 @@ import {
   nextStep,
   simulationAt,
 } from "../src/simulation.mjs";
+import { POSITION_COUNT, POSITION_GAP, RIDE_DURATION, ROUTE, rideAt, rideStep, routePoint } from "../src/ride-model.mjs";
+import { QUIZ_DURATIONS, quizSceneAt } from "../src/quiz-simulation.mjs";
+
+test("atividade conserva dez situações, seis escritas e quatro simulações com escolhas equilibradas", () => {
+  const simulated = QUESTIONS.filter(q => q.simulation);
+  assert.equal(simulated.length, 4);
+  assert.equal(QUESTIONS.filter(q => !q.simulation).length, 6);
+  assert.deepEqual(new Set(simulated.map(q => q.simulation)), new Set(["download", "messages", "players", "ride"]));
+  for (const protocol of ["TCP", "UDP"]) assert.equal(simulated.filter(q => q.answer === protocol).length, 2);
+  for (const q of simulated) {
+    assert.equal(quizSceneAt(q.simulation, 0).done, false);
+    const end = quizSceneAt(q.simulation, QUIZ_DURATIONS[q.simulation]);
+    assert.equal(end.done, true);
+    assert.ok(end.message.length > 20);
+  }
+});
+test("cenas de arquivo e mensagens aguardam perdas e só entregam a sequência completa após recuperar", () => {
+  assert.deepEqual(quizSceneAt("download", 6300).delivered, [1, 2]);
+  assert.deepEqual(quizSceneAt("download", 10800).delivered, [1, 2, 3, 4, 5, 6]);
+  assert.deepEqual(quizSceneAt("messages", 5000).delivered, [1]);
+  assert.equal(quizSceneAt("messages", 5000).buffered, true);
+  assert.equal(quizSceneAt("messages", 6500).retry, true);
+  assert.deepEqual(quizSceneAt("messages", 7200).delivered, [1, 2, 3]);
+});
+test("cenas do personagem e da moto mostram atualização atual sem recuperar posições perdidas", () => {
+  for (const kind of ["players", "ride"]) {
+    assert.equal(quizSceneAt(kind, 6000).udp.sequence, 2);
+    assert.equal(quizSceneAt(kind, 6400).udp.sequence, 5);
+    assert.equal(quizSceneAt(kind, 9800).udp.sequence, 7);
+    assert.equal(quizSceneAt(kind, 9800).udp.discarded, true);
+  }
+});
+
+test("corrida UDP mantém posição durante a perda, salta à atual e rejeita atualização antiga", () => {
+  const before = rideAt(2800).udp;
+  assert.equal(before.sequence, 2);
+  assert.deepEqual(rideAt(6300).udp, before);
+  assert.equal(rideAt(6400).udp.sequence, 5);
+  assert.equal(rideAt(8800).udp.sequence, 7);
+  const stale = rideAt(9800).udp;
+  assert.equal(stale.sequence, 7, "a posição 6 atrasada não faz o mapa voltar");
+  assert.equal(stale.discarded, true);
+});
+test("corrida TCP recupera perdas sem saltar trechos, com possível atraso da reprodução", () => {
+  assert.equal(rideAt(5000).tcp.waiting, true);
+  assert.equal(rideAt(5000).tcp.sequence, 2);
+  assert.equal(rideAt(6400).udp.sequence, 5);
+  assert.equal(rideAt(6400).tcp.sequence, 2);
+  let previous = 0;
+  for (let time = 0; time <= RIDE_DURATION; time += 10) {
+    const current = rideAt(time).tcp.progress;
+    assert.ok(current >= previous, "o mapa nunca volta");
+    assert.ok(current - previous <= 10 / POSITION_GAP / POSITION_COUNT + 1e-9, "a animação não pula posições");
+    previous = current;
+  }
+  assert.equal(rideAt(14800).udp.arrived, true);
+  assert.equal(rideAt(14800).tcp.arrived, false);
+  assert.equal(rideAt(RIDE_DURATION).tcp.arrived, true);
+  assert.equal(rideAt(RIDE_DURATION).done, true);
+});
+test("ambos os mapas terminam no mesmo destino e etapas chegam ao final", () => {
+  assert.deepEqual([routePoint(0).x, routePoint(0).y], ROUTE[0]);
+  for (const protocol of ["tcp", "udp"]) {
+    const end = rideAt(RIDE_DURATION)[protocol];
+    assert.equal(end.progress, 1);
+    assert.equal(end.sequence, POSITION_COUNT);
+    const point = routePoint(end.progress);
+    assert.deepEqual([point.x, point.y], ROUTE.at(-1));
+  }
+  let time = 0;
+  while (time < RIDE_DURATION) {
+    const next = rideStep(time);
+    assert.ok(next > time);
+    time = next;
+  }
+  assert.equal(time, RIDE_DURATION);
+  assert.deepEqual(rideAt(-100), rideAt(0));
+  assert.deepEqual(rideAt(Infinity), rideAt(RIDE_DURATION));
+});
 
 test("10 questões com cinco TCP, cinco UDP e IDs únicos", () => {
   assert.equal(QUESTIONS.length, 10);
@@ -109,8 +188,8 @@ test("armazenamento bloqueado ou corrompido tem recuperação segura", () => {
   assert.equal(gap.index, 1);
   assert.equal(Object.keys(gap.answers).length, 1);
 });
-test("rotas por hash funcionam nos oito slides e na atividade", () => {
-  for (let n = 1; n <= 8; n++)
+test("rotas por hash funcionam nos nove slides e na atividade", () => {
+  for (let n = 1; n <= 9; n++)
     assert.deepEqual(parseRoute(`#/slides/${n}`), {
       mode: "slides",
       slide: n - 1,

@@ -1,6 +1,10 @@
-# Ilustrações próprias
+# Ilustrações e recursos visuais
 
 Geradas com a ferramenta imagegen integrada, inspecionadas e copiadas para o projeto. As imagens do template fornecido não foram incorporadas ao site.
+
+## public/assets/uber-moto.webp
+
+Ilustração 3D oficial de moto, obtida na página pública [Uber Moto](https://www.uber.com/br/pt-br/ride/uber-moto/), consultada em 26/10/2026. Origem: https://tb-static.uber.com/prod/udam-assets/e368b843-5c56-46c0-a2c5-b050aacc15c5.png . Derivação para uso no mapa: remoção das margens transparentes e redução para 256 × 237 pixels, WebP com transparência; sem alteração do desenho. Direitos da Uber Technologies, Inc.; este recurso não é uma ilustração própria nem está incluído nas licenças MIT das bibliotecas. Uso na demonstração educacional solicitada pelo professor, sem afiliação ou conexão com a Uber. O mapa, os prédios e o trajeto são SVGs próprios, sem mapas ou localização reais.
 
 ## public/assets/computadores.png
 

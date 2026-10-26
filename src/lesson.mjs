@@ -4,8 +4,9 @@ export const QUESTIONS = [
   {
     id: "instalador",
     icon: "download",
-    title: "O instalador precisa chegar inteiro",
-    text: "Você vai baixar um programa. Todas as partes precisam chegar corretamente para a instalação funcionar. Qual protocolo oferece confirmação e recuperação de partes perdidas?",
+    title: "Simulação: o arquivo chega completo?",
+    simulation: "download",
+    text: "Inicie a cena e observe a parte 3. Qual protocolo oferece a recuperação da parte perdida para completar este arquivo?",
     answer: "TCP",
     explanation:
       "O TCP confirma o recebimento e retransmite partes perdidas. Isso ajuda a receber o arquivo completo.",
@@ -22,17 +23,19 @@ export const QUESTIONS = [
   {
     id: "documento",
     icon: "file",
-    title: "Um documento sem partes faltando",
-    text: "Um documento deve chegar completo e na ordem correta. O envio precisa recuperar informações que se perderem no caminho. Qual protocolo oferece esses recursos?",
+    title: "Simulação: as mensagens da equipe",
+    simulation: "messages",
+    text: "Observe o que acontece quando falta um trecho da mensagem 2. Qual protocolo oferece recuperação e entrega em ordem nesta conversa?",
     answer: "TCP",
     explanation:
-      "O TCP recupera perdas e entrega os dados em ordem. Isso é útil para transferir um documento completo.",
+      "O TCP recupera o trecho perdido e entrega os dados em ordem. O aplicativo usa esses dados para exibir as mensagens completas na sequência.",
   },
   {
     id: "jogadores",
     icon: "game",
-    title: "Onde o jogador está agora?",
-    text: "Um jogo envia posições dos jogadores muitas vezes por segundo. Uma posição nova substitui a anterior, e algumas atualizações podem ser perdidas. Qual protocolo permite seguir sem aguardar a recuperação da posição antiga?",
+    title: "Simulação: onde está o personagem?",
+    simulation: "players",
+    text: "Compare o personagem na partida com a visão do colega. Qual protocolo permite continuar recebendo posições novas sem recuperar obrigatoriamente as perdidas?",
     answer: "UDP",
     explanation:
       "Uma atualização recente pode substituir a perdida. O UDP permite enviar as próximas sem exigir confirmação ou recuperação da anterior.",
@@ -67,8 +70,9 @@ export const QUESTIONS = [
   {
     id: "objeto",
     icon: "position",
-    title: "A posição atual do objeto",
-    text: "Um painel acompanha um objeto em movimento. Chegam novas posições continuamente. Pode faltar uma atualização, pois a seguinte será mais útil que a antiga. Qual protocolo permite esse envio sem recuperação obrigatória?",
+    title: "Simulação: a moto no aplicativo",
+    simulation: "ride",
+    text: "Inicie a corrida e observe os saltos no mapa. Qual protocolo permite seguir com novas posições sem exigir a recuperação das atualizações que faltaram?",
     answer: "UDP",
     explanation:
       "A posição mais recente é a informação útil nesse cenário. O UDP não recupera obrigatoriamente a atualização que faltou.",
@@ -163,10 +167,10 @@ export function saveAttempt(storage, attempt) {
   }
 }
 export function parseRoute(hash) {
-  if (hash === "#/jogo") return { mode: "game", slide: 7 };
-  const slide = /^#\/slides\/([1-8])$/.exec(hash);
+  if (hash === "#/jogo") return { mode: "game", slide: 8 };
+  const slide = /^#\/slides\/([1-9])$/.exec(hash);
   if (slide) return { mode: "slides", slide: Number(slide[1]) - 1 };
   return hash === "#/atividade"
-    ? { mode: "quiz", slide: 7 }
+    ? { mode: "quiz", slide: 8 }
     : { mode: "slides", slide: 0 };
 }

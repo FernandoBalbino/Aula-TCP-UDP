@@ -44,6 +44,8 @@ import {
 } from "./lesson.mjs";
 import { DURATION, nextStep, simulationAt } from "./simulation.mjs";
 import { Game } from "./Game.jsx";
+import { RideSimulation } from "./RideSimulation.jsx";
+import { QuestionSimulation } from "./QuestionSimulation.jsx";
 
 const asset = (name) => import.meta.env.BASE_URL + "assets/" + name;
 const ICONS = {
@@ -63,6 +65,7 @@ const TITLES = [
   "TCP e UDP lado a lado",
   "Exemplos do cotidiano",
   "Veja os pacotes viajando",
+  "Uma corrida, dois protocolos",
   "O que ficou da viagem?",
 ];
 const goSlide = (n) => {
@@ -121,7 +124,7 @@ function SlideContent({ slide, hasAttempt }) {
           </button>
         </div>
         <div className="cover-art">
-          <span className="chapter-tag">01 / 08</span>
+          <span className="chapter-tag">01 / 09</span>
           <img
             src={asset("computadores.png")}
             alt="Dois computadores trocando pequenos pacotes roxos e laranja"
@@ -349,9 +352,9 @@ function SlideContent({ slide, hasAttempt }) {
       </section>
     );
   return (
-    <section className="slide review-slide" aria-label={TITLES[7]}>
+    <section className="slide review-slide" aria-label={TITLES[8]}>
       <div className="review-copy">
-        <Label>08 / PARA LEVAR COM VOCÊ</Label>
+        <Label>09 / PARA LEVAR COM VOCÊ</Label>
         <h2>
           O que ficou
           <br />
@@ -635,7 +638,7 @@ function Quiz({ attempt, setAttempt, storageAvailable, onStartGame }) {
   return (
     <main className="quiz-page">
       <header className="quiz-header">
-        <button className="text-button" onClick={() => goSlide(7)}>
+        <button className="text-button" onClick={() => goSlide(8)}>
           <ArrowLeft />
           Voltar aos slides
         </button>
@@ -667,7 +670,7 @@ function Quiz({ attempt, setAttempt, storageAvailable, onStartGame }) {
             </p>
             <p>
               Cada acerto vale 10 pontos. Você recebe uma explicação a cada
-              resposta.
+              resposta. São seis questões escritas e quatro com simulações.
             </p>
           </div>
           <form
@@ -701,7 +704,7 @@ function Quiz({ attempt, setAttempt, storageAvailable, onStartGame }) {
           </form>
         </section>
       ) : attempt.index < 10 ? (
-        <section className="question-screen">
+        <section className={"question-screen" + (question.simulation ? " has-simulation" : "")}>
           <div className="question-topline">
             <span>Olá, {attempt.name}</span>
             <span>Questão {attempt.index + 1} de 10</span>
@@ -724,6 +727,7 @@ function Quiz({ attempt, setAttempt, storageAvailable, onStartGame }) {
               {question.title}
             </h1>
             <p>{question.text}</p>
+            {question.simulation && <QuestionSimulation key={question.id} kind={question.simulation} paused={!!answer}/>}
             <div
               className="answer-options"
               role="group"
@@ -814,7 +818,7 @@ function Quiz({ attempt, setAttempt, storageAvailable, onStartGame }) {
               Refazer atividade
               <ArrowCounterClockwise />
             </button>
-            <button className="text-button" onClick={() => goSlide(7)}>
+            <button className="text-button" onClick={() => goSlide(8)}>
               <ArrowLeft />
               Voltar aos slides
             </button>
@@ -887,7 +891,7 @@ export function App() {
         return;
       if (["ArrowRight", "PageDown"].includes(e.key)) {
         e.preventDefault();
-        goSlide(Math.min(7, route.slide + 1));
+        goSlide(Math.min(TITLES.length - 1, route.slide + 1));
       }
       if (["ArrowLeft", "PageUp"].includes(e.key)) {
         e.preventDefault();
@@ -899,7 +903,7 @@ export function App() {
       }
       if (e.key === "End") {
         e.preventDefault();
-        goSlide(7);
+        goSlide(8);
       }
     };
     window.addEventListener("keydown", handler);
@@ -963,15 +967,18 @@ export function App() {
         </header>
         <main className="deck-content">
           <span className="sr-only" role="status" ref={title} tabIndex={-1}>
-            Slide {route.slide + 1} de 8: {TITLES[route.slide]}
+            Slide {route.slide + 1} de {TITLES.length}: {TITLES[route.slide]}
           </span>
-          {route.slide !== 6 && (
+          {route.slide !== 6 && route.slide !== 7 && (
             <div className="slide-transition" key={route.slide}>
               <SlideContent slide={route.slide} hasAttempt={!!attempt.name} />
             </div>
           )}
           <div hidden={route.slide !== 6}>
             <Simulation active={route.mode === "slides" && route.slide === 6} />
+          </div>
+          <div hidden={route.slide !== 7}>
+            <RideSimulation active={route.mode === "slides" && route.slide === 7} />
           </div>
         </main>
         <footer className="lesson-footer">
@@ -1005,12 +1012,12 @@ export function App() {
               <ArrowLeft />
             </button>
             <span>
-              <b>{String(route.slide + 1).padStart(2, "0")}</b> / 08
+              <b>{String(route.slide + 1).padStart(2, "0")}</b> / {String(TITLES.length).padStart(2, "0")}
             </span>
             <button
               className="icon-button next"
               onClick={() => goSlide(route.slide + 1)}
-              disabled={route.slide === 7}
+              disabled={route.slide === TITLES.length - 1}
               aria-label="Próximo slide"
             >
               <ArrowRight />

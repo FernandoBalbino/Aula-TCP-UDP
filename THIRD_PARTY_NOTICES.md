@@ -13,3 +13,6 @@
 As ilustrações de computadores e encomendas são recursos gerados para esta aplicação, com prompts documentados em `ASSETS.md`. A referência enviada pelo professor orientou paleta, tipografia, espaço e composição; não foi usada como imagem do site.
 
 O conteúdo foi redigido em português a partir dos conceitos básicos das RFCs oficiais 9293 e 768, com links na aplicação e no README, sem reproduzir seus textos integralmente.
+# Ilustração Uber Moto
+
+`public/assets/uber-moto.webp`: ilustração oficial da página pública https://www.uber.com/br/pt-br/ride/uber-moto/ . Fonte original: https://tb-static.uber.com/prod/udam-assets/e368b843-5c56-46c0-a2c5-b050aacc15c5.png . © Uber Technologies, Inc. Marca e imagem pertencem a seus titulares e não são disponibilizadas sob as licenças das bibliotecas deste projeto. Exibição em exemplo educacional, sem afiliação, integração ou afirmação sobre a implementação real da Uber. Proveniência e otimização descritas em `ASSETS.md`.

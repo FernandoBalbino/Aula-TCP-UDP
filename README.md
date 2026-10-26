@@ -2,13 +2,15 @@
 
 [Abrir a aula](https://fernandobalbino.github.io/Aula-TCP-UDP/) · [Ir direto à atividade](https://fernandobalbino.github.io/Aula-TCP-UDP/#/atividade)
 
-Oito slides para uma aula introdutória de redes no Ensino Médio Técnico, com simulação animada, dez questões e um jogo 3D de dez fases.
+Nove slides para uma aula introdutória de redes no Ensino Médio Técnico, com simulação animada, dez questões e um jogo 3D de dez fases.
 
 ## Usar com a turma
 
 - Na TV, navegue pelas setas do teclado ou pelos botões. Home volta à capa e End abre a revisão. Use o botão de tela cheia para apresentar.
 - No slide 7, escolha TCP ou UDP e inicie o envio. É possível pausar, continuar, reiniciar ou avançar por etapas. A preferência de movimento reduzido ativa o modo por etapas.
+- No slide 8, use **Iniciar corrida** para comparar dois mapas do mesmo trajeto fictício. TCP recupera as posições e o app as anima em sequência; UDP mostra diretamente a posição mais recente recebida, com pausas e saltos. É possível pausar, reiniciar e avançar por etapas. O círculo verde indica a posição real da moto.
 - Nos Chromebooks, os alunos abrem o mesmo link e selecionam **Atividade prática**. Cada resposta é registrada uma única vez, com explicação imediata. São dez questões e até 100 pontos.
+- A atividade combina seis situações escritas e quatro cenas interativas (questões 1, 3, 4 e 8): recuperar um arquivo, ordenar mensagens, acompanhar um personagem na tela do colega e localizar a moto no app. Use **Iniciar simulação**, pause, repita ou avance por etapas; depois escolha TCP ou UDP. As cenas não revelam o protocolo antes da resposta. Os IDs e as respostas corretas dessas quatro situações foram preservados para manter tentativas já salvas.
 - A pontuação e o nome ficam neste navegador. Atualizar a página ou voltar aos slides preserva o progresso. **Refazer atividade** inicia outra tentativa com o mesmo nome.
 - Não existe ranking compartilhado ou envio de respostas ao professor. Para conferir o resultado, o aluno pode mostrar a tela final, que inclui as dez explicações.
 - Depois das dez questões, use **Iniciar jogo**. O carregamento prepara o código 3D, as geometrias, os materiais, as fontes e os shaders antes de liberar os controles.
@@ -43,6 +45,8 @@ Sugestão de 60 minutos: 30 minutos nos conceitos e exemplos, 10 na simulação,
 O TCP confirma dados recebidos, retransmite perdas e oferece entrega em ordem. Uma falha de conexão ainda pode impedir uma transferência. O UDP não exige confirmação, retransmissão ou organização pelo próprio protocolo. Aplicações podem acrescentar recursos sobre eles.
 
 Os pacotes, os números e os tempos são uma simplificação didática. O exemplo de TCP mantém partes posteriores em espera até recuperar a parte 3; o de UDP recebe cinco partes sem recuperar a terceira. A velocidade básica de trânsito é a mesma nos dois modos. A simulação não mede desempenho real da internet.
+
+A corrida usa os mesmos envios e incidentes de rede nos dois modos. O app UDP descarta atualizações antigas por número de sequência; isso é uma regra da aplicação. No exemplo TCP, a reprodução contínua é uma escolha da interface e pode acumular atraso enquanto recupera perdas. A simulação não representa a implementação real da Uber.
 
 Fontes oficiais, também disponíveis em **Fontes e aula**:
 

@@ -1,0 +1,28 @@
+.has-simulation.question-screen { max-width: 1120px; padding-top: 22px; }
+.has-simulation .question-content { padding-top: 20px; }
+.has-simulation .question-icon { display: none; }
+.has-simulation .question-content h1 { font-size: clamp(31px, 3vw, 49px); }
+.has-simulation .question-content > p { font-size: clamp(17px, 1.35vw, 23px); margin: 12px 0 16px; }
+.question-simulation { border: 1px solid #e1daef; border-radius: 13px; padding: 15px 18px; margin-bottom: 20px; background: #fdfcff; }
+.question-scene-heading { display: flex; justify-content: space-between; gap: 10px; font-size: 10px; letter-spacing: .06em; font-weight: 700; color: var(--purple); }
+.question-scene-heading > span:last-child { font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.question-scene > svg { display: block; width: 100%; height: 220px; margin: 7px 0; }
+.question-scene-ride > .ride-map { height: 240px; }
+.question-scene-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.question-scene-controls .button { min-height: 38px; padding: 8px 13px; gap: 8px; font-size: 12px; }
+.question-scene-controls .button svg { width: 18px; height: 18px; }
+.question-scene-controls > label { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
+.question-scene-controls input { width: 16px; height: 16px; accent-color: var(--purple); }
+.question-scene-controls > span { margin-left: auto; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.question-scene-status { color: var(--purple); font-size: 14px; font-weight: 500; min-height: 22px; margin-top: 12px; }
+.question-scene-note { color: var(--muted); font-size: 10px; margin-top: 4px; }
+.has-simulation .feedback-slot:empty { min-height: 0; }
+@media (max-width: 600px) {
+  .question-simulation { padding: 12px; }
+  .question-scene > svg { height: auto; min-height: 155px; }
+  .question-scene-ride > .ride-map { height: 220px; }
+  .question-scene-heading { font-size: 9px; }
+  .question-scene-controls { gap: 8px; }
+  .question-scene-controls .button { padding: 8px 10px; font-size: 11px; }
+  .question-scene-status { font-size: 13px; }
+}
